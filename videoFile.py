@@ -32,8 +32,9 @@ class VideoFile ( object ) :
         self.tracksNumber = self.processTracks()
         self.fileInfo = self.processFile()
         #self.showFileInfo()
-        self.extractTracks()
-        self.joinTracks()
+        #self.extractTracks()
+        #self.joinTracks()
+        self.removeTracksFiles()
 
     #GETTER
     def getFileName ( self ) :
@@ -177,3 +178,13 @@ class VideoFile ( object ) :
             print stdout_data
         else :
             print "ERROR : " + stdout_data + "(" + str(p.returncode) + ")"
+
+    #DELETE TRACKS FILES
+    def removeTracksFiles ( self ) :
+        i = 0
+        for track in self.tracks :
+            if track.getTrackType() == "Audio" :
+                os.remove("audio" + str(i) + ".aac")
+            if track.getTrackType() == "Video" :
+                os.remove("video" + str(i) + ".h264")
+            i = i + 1
